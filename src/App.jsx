@@ -1,34 +1,61 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './index.css'
+import Header from './components/header/Header'
+import TasksList from './components/taskList/TasksList'
+import Footer from './components/footer/Footer'
+import InputContainer from './components/inputContainer/InputContainer'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+
+  const [ task, setTask ] = useState("")
+  const [ taskList, setTaskList ] = useState(JSON.parse(localStorage.getItem("taskList")) || [])
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const newTask = {
+      id: crypto.randomUUID(),
+      taskName: task,
+      completed: false
+    }
+    localStorage.setItem("taskList", JSON.stringify([...taskList, newTask]))
+    setTaskList([...taskList, newTask])
+
+  }
+
+  const handleChange = (e) => {
+    setTask(e.target.value)
+
+  }
+
+  const deleteTask = (id) => {
+    const deletedTask = taskList.filter(task => task.id !== id)
+    localStorage.setItem("taskList", JSON.stringify(deletedTask))
+
+    setTaskList(deletedTask)  
+  }
+
+  const handleStatus = (id) => {
+    const changeStatusTask = taskList.map(task => {
+      if(task.id ===id){
+        return {...task, completed: !task.completed}
+      }
+      return task
+    })
+    localStorage.setItem("taskList", JSON.stringify(changeStatusTask))
+    setTaskList(changeStatusTask)  
+
+
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <section className="text-white bg-gradient-to-r from-gray-900 from-10%  via-cyan-950 via-80% to-orange-700 h-screen flex flex-col content-center">
+      <Header />
+      <InputContainer handleSubmit={handleSubmit} handleChange={handleChange} task={task}/>
+      <TasksList taskList={taskList} deleteTask={deleteTask} handleStatus={handleStatus}/>
+      <Footer />
+    </section>
   )
 }
 
