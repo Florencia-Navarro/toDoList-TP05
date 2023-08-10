@@ -6,28 +6,30 @@ import Footer from './components/footer/Footer'
 import InputContainer from './components/inputContainer/InputContainer'
 
 function App() {
-
-
-  const [ task, setTask ] = useState("")
+  // const [ task, setTask ] = useState("")
   const [ taskList, setTaskList ] = useState(JSON.parse(localStorage.getItem("taskList")) || [])
+  // const [error, setError] = useState("")
 
+  // const handleChange = (e) => {
+  //   setTask(e.target.value)
+  //   setError('')
+  // }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = ( tarea) => {
+    // e.preventDefault()
+
     const newTask = {
       id: crypto.randomUUID(),
-      taskName: task,
+      taskName: tarea,
       completed: false
     }
     localStorage.setItem("taskList", JSON.stringify([...taskList, newTask]))
     setTaskList([...taskList, newTask])
-
+    //setTask("")
+    // setError("")
   }
 
-  const handleChange = (e) => {
-    setTask(e.target.value)
-
-  }
+  
 
   const deleteTask = (id) => {
     const deletedTask = taskList.filter(task => task.id !== id)
@@ -45,18 +47,21 @@ function App() {
     })
     localStorage.setItem("taskList", JSON.stringify(changeStatusTask))
     setTaskList(changeStatusTask)  
-
-
   }
+
+  
 
   return (
     <section className="text-white bg-gradient-to-r from-gray-900 from-10%  via-cyan-950 via-80% to-orange-700 h-screen flex flex-col content-center">
       <Header />
-      <InputContainer handleSubmit={handleSubmit} handleChange={handleChange} task={task}/>
-      <TasksList taskList={taskList} deleteTask={deleteTask} handleStatus={handleStatus}/>
+      <InputContainer handleSubmit={handleSubmit} taskList={taskList} /* handleChange={handleChange} task={task} error={error} */ />
+      <TasksList taskList={taskList} deleteTask={deleteTask} handleStatus={handleStatus} />
       <Footer />
     </section>
   )
 }
 
 export default App
+
+
+  
