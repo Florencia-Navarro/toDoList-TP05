@@ -3,12 +3,11 @@ import { FaExclamationCircle } from "react-icons/fa"
 
 function AddTask({handleChange, tasks, taskList}) {
 
-
   const [error, setError] = useState("")
   
-
   const handleInputChange = (e) => {
     const inputValue = e.target.value
+
     handleChange(inputValue)
     validateInput(inputValue)
   }
@@ -28,9 +27,13 @@ function AddTask({handleChange, tasks, taskList}) {
       
       <div className="bg-orange-800 m-3 p-3 flex flex-col sm:sm:w-2/4">
           <label htmlFor="">Tarea</label>
-          <input type="text" placeholder="Ingresa una tarea" value={tasks} className="bg-orange-800" onChange={(e) => {
-        handleChange(e)
-        validateInput(e.target.value)}}/>
+          <input 
+              type="text" 
+              placeholder="Ingresa una tarea" 
+              value={tasks} className="bg-orange-800" 
+              onChange={(e) => {handleChange(e)
+                                validateInput(e.target.value)}}
+          />
           {error && <span className="text-xs text-black flex flex-row"><FaExclamationCircle className="mt-[2px] mr-[2px]"/> {error}</span>}
           
       </div>

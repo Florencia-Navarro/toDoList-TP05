@@ -6,6 +6,7 @@ function FilterTask({filterTask, setCurrentFilter}) {
 
   const handleOptionSelected = (e) => {
     const selectedFilter = e.target.value
+
     setFilter(selectedFilter)
     setCurrentFilter(selectedFilter)
     filterTask(selectedFilter)
@@ -15,7 +16,12 @@ function FilterTask({filterTask, setCurrentFilter}) {
       <>
         <article className="bg-orange-800  m-3 p-3 flex flex-col sm:w-2/4">
             <label htmlFor="">Seleccionar</label>
-            <select onChange={handleOptionSelected}  value={filter} name="" id="" className="bg-orange-800">
+            <select 
+                onChange={handleOptionSelected}  
+                value={filter} 
+                name="filter" 
+                className="bg-orange-800"
+            >
                 <option value="">Todas</option>
                 <option value="completas">Completas</option>
                 <option value="incompletas">Incompletas</option>
