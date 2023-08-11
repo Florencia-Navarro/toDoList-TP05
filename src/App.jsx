@@ -46,11 +46,16 @@ function App() {
     if (filter === "completas") {
       const completedTasks = taskList.filter(task => task.completed)
       setFilteredTasks(completedTasks)
+      console.log(completedTasks)
     } else if (filter === "incompletas") {
       const incompletedTasks = taskList.filter(task => !task.completed);
       setFilteredTasks(incompletedTasks)
+      console.log(incompletedTasks)
+
     } else {
       setFilteredTasks(taskList)
+      console.log(taskList)
+
     }
   }
   
@@ -58,8 +63,8 @@ function App() {
   return (
     <section className="flex flex-col text-white bg-gradient-to-r from-gray-900 from-10%  via-cyan-950 via-80% to-orange-700  content-center">
       <Header />
-      <InputContainer handleSubmit={handleSubmit} taskList={taskList}  />
-      <TasksList taskList={taskList} deleteTask={deleteTask} handleStatus={handleStatus}   />
+      <InputContainer handleSubmit={handleSubmit} taskList={taskList}  filterTask={filterTask}/>
+      <TasksList taskList={taskList} deleteTask={deleteTask} handleStatus={handleStatus}  filteredTasks={filteredTasks} />
       <Footer />
     </section>
   )
