@@ -6,33 +6,26 @@ import Footer from './components/footer/Footer'
 import InputContainer from './components/inputContainer/InputContainer'
 
 function App() {
-
-
-  const [ task, setTask ] = useState("")
   const [ taskList, setTaskList ] = useState(JSON.parse(localStorage.getItem("taskList")) || [])
+  const [filteredTasks, setFilteredTasks] = useState([])
+  const [currentFilter, setCurrentFilter] = useState("")
 
+  const handleSubmit = ( tarea) => {
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
     const newTask = {
       id: crypto.randomUUID(),
-      taskName: task,
+      taskName: tarea,
       completed: false
     }
+
     localStorage.setItem("taskList", JSON.stringify([...taskList, newTask]))
     setTaskList([...taskList, newTask])
-
-  }
-
-  const handleChange = (e) => {
-    setTask(e.target.value)
-
   }
 
   const deleteTask = (id) => {
     const deletedTask = taskList.filter(task => task.id !== id)
-    localStorage.setItem("taskList", JSON.stringify(deletedTask))
 
+    localStorage.setItem("taskList", JSON.stringify(deletedTask))
     setTaskList(deletedTask)  
   }
 
@@ -43,20 +36,45 @@ function App() {
       }
       return task
     })
+
     localStorage.setItem("taskList", JSON.stringify(changeStatusTask))
     setTaskList(changeStatusTask)  
-
-
   }
 
+  const filterTask = (filter) => {
+    if (filter === "completas") {
+      const completedTasks = taskList.filter(task => task.completed)
+      setFilteredTasks(completedTasks)
+    } else if (filter === "incompletas") {
+      const incompletedTasks = taskList.filter(task => !task.completed);
+      setFilteredTasks(incompletedTasks)
+    } else {
+      setFilteredTasks(taskList)
+    }
+  }
+  
+
   return (
-    <section className="text-white bg-gradient-to-r from-gray-900 from-10%  via-cyan-950 via-80% to-orange-700 h-screen flex flex-col content-center">
+    <section className="flex flex-col text-white bg-gradient-to-r from-gray-900 from-10%  via-cyan-950 via-80% to-orange-700  content-center">
       <Header />
-      <InputContainer handleSubmit={handleSubmit} handleChange={handleChange} task={task}/>
-      <TasksList taskList={taskList} deleteTask={deleteTask} handleStatus={handleStatus}/>
+      <InputContainer 
+            handleSubmit={handleSubmit} 
+            taskList={taskList}  
+            filterTask={filterTask} 
+            setCurrentFilter={setCurrentFilter}
+      />
+      <TasksList 
+            taskList={currentFilter === "" ? taskList : filteredTasks} 
+            deleteTask={deleteTask} 
+            handleStatus={handleStatus}  
+            filteredTasks={filteredTasks} 
+      />
       <Footer />
     </section>
   )
 }
 
 export default App
+
+
+  
