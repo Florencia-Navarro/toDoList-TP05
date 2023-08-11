@@ -8,7 +8,9 @@ import InputContainer from './components/inputContainer/InputContainer'
 function App() {
   const [ taskList, setTaskList ] = useState(JSON.parse(localStorage.getItem("taskList")) || [])
   const [filteredTasks, setFilteredTasks] = useState([])
- 
+  const [currentFilter, setCurrentFilter] = useState("")
+
+ console.log(filteredTasks) 
 
   const handleSubmit = ( tarea) => {
 
@@ -40,9 +42,11 @@ function App() {
     })
     localStorage.setItem("taskList", JSON.stringify(changeStatusTask))
     setTaskList(changeStatusTask)  
+    console.log(changeStatusTask)
   }
 
   const filterTask = (filter) => {
+    console.log(filter)
     if (filter === "completas") {
       const completedTasks = taskList.filter(task => task.completed)
       setFilteredTasks(completedTasks)
@@ -63,8 +67,8 @@ function App() {
   return (
     <section className="flex flex-col text-white bg-gradient-to-r from-gray-900 from-10%  via-cyan-950 via-80% to-orange-700  content-center">
       <Header />
-      <InputContainer handleSubmit={handleSubmit} taskList={taskList}  filterTask={filterTask}/>
-      <TasksList taskList={taskList} deleteTask={deleteTask} handleStatus={handleStatus}  filteredTasks={filteredTasks} />
+      <InputContainer handleSubmit={handleSubmit} taskList={taskList}  filterTask={filterTask} setCurrentFilter={setCurrentFilter}/>
+      <TasksList taskList={currentFilter === "" ? taskList : filteredTasks} deleteTask={deleteTask} handleStatus={handleStatus}  filteredTasks={filteredTasks} />
       <Footer />
     </section>
   )

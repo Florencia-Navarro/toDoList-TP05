@@ -2,7 +2,7 @@ import { useState } from "react";
 import AddTask from "./addTask/AddTask"
 import FilterTask from "./filterTask.jsx/FilterTask"
 
-function InputContainer({handleSubmit, taskList,filterTask}) {
+function InputContainer({handleSubmit, taskList,filterTask, setCurrentFilter}) {
 
     const [task, setTask] = useState("")
     
@@ -19,6 +19,7 @@ function InputContainer({handleSubmit, taskList,filterTask}) {
     
     handleSubmit(task)
     setTask("")
+    // filterTask(filter)
   }
 
   
@@ -29,7 +30,7 @@ function InputContainer({handleSubmit, taskList,filterTask}) {
                 <form onSubmit={(e) => handleFormSubmit(e, task)}>
                     <article className="sm:flex sm:flex-row">
                         <AddTask handleChange={handleChange} tasks={task} taskList={taskList} />
-                        <FilterTask filterTask={filterTask}/>
+                        <FilterTask filterTask={filterTask} setCurrentFilter={setCurrentFilter}/>
                     </article>
                         
                         <article className="w-full flex justify-center">
