@@ -5,6 +5,7 @@ function AddTask({handleChange, tasks, taskList}) {
 
 
   const [error, setError] = useState("")
+  
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value
@@ -13,14 +14,13 @@ function AddTask({handleChange, tasks, taskList}) {
   }
 
   const validateInput = (inputValue) => {
-    console.log(taskList)
 
     if (inputValue.length < 3) {
-      setError("La tarea debe tener al menos 3 caracteres.");
+      setError("La tarea debe tener al menos 3 caracteres.")
     } else if (taskList.some(task => task.taskName === inputValue)) {
-      setError("Esta tarea ya existe.");
+      setError("Esta tarea ya existe.")
     } else {
-      setError("");
+      setError("")
     }
   }
 
@@ -32,6 +32,7 @@ function AddTask({handleChange, tasks, taskList}) {
         handleChange(e)
         validateInput(e.target.value)}}/>
           {error && <span className="text-xs text-black flex flex-row"><FaExclamationCircle className="mt-[2px] mr-[2px]"/> {error}</span>}
+          
       </div>
       
     )

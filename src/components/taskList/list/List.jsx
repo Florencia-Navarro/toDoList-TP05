@@ -10,7 +10,8 @@ function List({taskList, deleteTask, handleStatus}) {
 
         <ul>
             {
-                taskList.map((task) => <li key={task.id} className="bg-orange-800 flex justify-between my-2">
+                taskList.map((task) =>
+                 <li key={task.id} className="bg-orange-800 flex justify-between my-2">
                         <h5 className={task.completed ? "p-2 my-2 line-through" : "p-2 my-2"} >{task.taskName}</h5>
                         <article>
                             <button onClick={() => handleStatus(task.id)} className={task.completed ? "bg-green-600 border-[1px] border-cyan-950 p-2 m-2" : "bg-gray-900 border-[1px] border-cyan-950 p-2 m-2 hover:bg-green-600"} >
